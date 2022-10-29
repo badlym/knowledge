@@ -1,33 +1,21 @@
-name: Deploy GitHub Pages
-
-# 触发条件：在 push 到 master 分支后
-on:
-  push:
-    branches:
-      - master
-
-# 任务
+name: Build and Deploy
+on: [push]
+permissions:
+  contents: write
 jobs:
   build-and-deploy:
-    # 服务器环境：最新版 Ubuntu
+    concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
     runs-on: ubuntu-latest
     steps:
-      # 拉取代码
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          persist-credentials: false
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
 
-      # 1、生成静态文件
-      - name: Build
-        run: npm install && npm run build
+      - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
+        run: |
+          npm ci
+          npm run build
 
-      # 2、部署到 GitHub Pages
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          REPOSITORY_NAME: badlym/knowledge
-          BRANCH: gh-pages
-          FOLDER: docs/.vitepress/dist
-          #注意这里的 public 是仓库根目录下的 public，也就是 npm run build 生成静态资源的路径，比如有的人是 `docs/.vuepress/dist`
+          folder: docs/.vitepress/dist # The folder the action should deploy.
