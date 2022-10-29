@@ -6,7 +6,7 @@ export default {
     logo:'/logo.png',
     nav: [
       { text: "个人笔记", link: "/guild/installation" },
-      { text: "面试题", link: "/examples/button/" },
+      { text: "面试题", link: "/interview/" },
     ],
     socialLinks: [{ icon: "github", link: "https://github.com/badlym" }],
   },
