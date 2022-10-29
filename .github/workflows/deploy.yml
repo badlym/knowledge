@@ -1,29 +1,27 @@
-name: Deploy
-
+name: CI
 on:
   push:
-    branches:
-      - master
-
+    branches: [master]
+  pull_request:
+    branches: [master]
 jobs:
-  deploy:
+  Build:
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
+      - uses: pnpm/action-setup@v2.1.0
         with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
+          version: 7.2.1
+      - name: Install modules
+        run: pnpm install
 
-      - name: Build
-        run: pnpm docs:build
+      - name: Run Lint
+        run: pnpm run docs:build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN  }}#对于 GitHub Actions 的新手：请注意，这GITHUB_TOKEN不是个人访问令牌。GitHub Actions 运行器会自动创建一个GITHUB_TOKEN密钥以在您的工作流程中进行身份验证。因此，您无需任何配置即可开始部署。
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: docs/.vitepress/dist
-          # cname: example.com # if wanna deploy to custom domain
