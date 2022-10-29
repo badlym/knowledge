@@ -24,6 +24,6 @@ jobs:
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.ACCESS_TOKEN  }}#github的个人访问令牌
+          github_token: ${{ secrets.GITHUB_TOKEN  }}#对于 GitHub Actions 的新手：请注意，这GITHUB_TOKEN不是个人访问令牌。GitHub Actions 运行器会自动创建一个GITHUB_TOKEN密钥以在您的工作流程中进行身份验证。因此，您无需任何配置即可开始部署。
           publish_dir: docs/.vitepress/dist
           # cname: example.com # if wanna deploy to custom domain
