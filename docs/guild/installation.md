@@ -1,6 +1,10 @@
-# 安装
+# 前端个人笔记
 
-## 环境支持
+[面试题](../interview/index.md)
+
+## 
+
+环境支持
 
 由于 Vue 3 不再支持 IE11，Element Plus 也不再支持 IE11 浏览器。
 
