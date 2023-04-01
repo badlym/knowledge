@@ -1,12 +1,5 @@
-# 前端个人笔记
-
-[面试题](../interview/index.md)
-
-## 常用方法
-
-```vue
 import { reactive } from 'vue';
-
+import path from 'path'
 /**
  * 表单数据 hook
  * @param initValue 默认值
@@ -37,5 +30,3 @@ export default function (initValue) {
 
 
 
-
-```
